@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<h1>Dashboard</h1>
+<a href="/logout">Logout</a>
+
+<h2>Upload Resume</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    <input type="file" name="resume" required><br><br>
+
+    <textarea name="job_desc" placeholder="Enter Job Description" required></textarea><br><br>
+
+    <button type="submit">Check Match</button>
+</form>
+
+{% if score is not none %}
+    <h2>Match Score: {{score}}%</h2>
+    <p>{{skills}}</p>
+{% endif %}
+
+<h2>Score Chart</h2>
+<canvas id="myChart" width="400" height="200"></canvas>
+
+<script>
+const scores = {{scores | tojson}};
+
+const ctx = document.getElementById('myChart').getContext('2d');
+new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: scores.map((_, i) => "Attempt " + (i+1)),
+        datasets: [{
+            label: 'Match Score',
+            data: scores,
+            fill: false,
+            borderWidth: 2
+        }]
+    }
+});
+</script>
+
+</body>
+</html>

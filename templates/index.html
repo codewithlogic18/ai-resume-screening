@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Resume Screening</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<h1>AI Resume Screening System</h1>
+
+<form method="POST" enctype="multipart/form-data">
+    <input type="file" name="resume" required><br><br>
+
+    <textarea name="job_desc" placeholder="Enter Job Description" required></textarea><br><br>
+
+    <button type="submit">Check Match</button>
+</form>
+
+{% if score is not none %}
+    <h2>Match Score: {{score}}%</h2>
+
+    <h3>Matched Skills:</h3>
+    <p>
+        {% for skill in skills %}
+            {{skill}},
+        {% endfor %}
+    </p>
+{% endif %}
+
+</body>
+</html>
